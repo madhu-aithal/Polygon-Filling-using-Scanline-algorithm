@@ -6,6 +6,12 @@ using namespace std;
 
 float x[100],y[100];
 int n;
+void delay()
+{
+    for(int i=0;i<100;i++)
+    	for(int j=0;j<100;j++)
+    		;
+}
 void edgedetect(float x1,float y1,float x2,float y2,int *le,int *re)
 {
 float mx,x,temp;
@@ -54,8 +60,12 @@ void scanfill(float x[],float y[])
 	for(j=0;j<500;j++)
 	{
 		if(le[j]<=re[j])
-			for(i=(int)le[j];i<(int)re[j];i++)
+			for(i=(int)le[j];i<(int)re[j];i++){
 				draw_pixel(i,j,BLACK);			
+				
+				glFlush();
+			}
+			delay();
 	}
 
 }
@@ -64,12 +74,12 @@ void display()
 
 	glClear(GL_COLOR_BUFFER_BIT);	
 	glColor3f(0.0, 0.0, 1.0);
+	glBegin(GL_LINE_LOOP);
 	for(int i=0;i<n;i++)
-	{
-		glBegin(GL_LINE_LOOP);
-		glVertex2f(x[i],y[i]);
-		glEnd();
+	{		
+		glVertex2f(x[i],y[i]);		
 	}	
+	glEnd();
 	scanfill(x,y);
 	glFlush();
 }
